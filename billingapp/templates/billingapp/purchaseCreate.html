@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase</title>
+</head>
+<body>
+<form action="" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <input type="submit" value="Add">
+</form>
+<table>
+    <tr>
+        <td>Item Name</td>
+        <td>Quantity</td>
+        <td>Purchase Price</td>
+        <td>Selling Price</td>
+    </tr>
+    {%for purchases in purchase%}
+    <tr>
+        <td>{{purchases.item}}</td>
+        <td>{{purchases.qty_purchase}}</td>
+        <td>{{purchases.purchase_price}}</td>
+        <td>{{purchases.selling_price}}</td>
+        <td><a href="">View</a></td>
+        <td><a href="">Edit</a></td>
+        <td><a href="">Delete</a></td>
+    </tr>
+    {%endfor%}
+</table>
+</body>
+</html>
