@@ -2,14 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Purchase</title>
+    <title>Title</title>
 </head>
 <body>
-<form action="" method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <input type="submit" value="Add">
-</form>
 <table>
     <tr>
         <td>Item Name</td>
@@ -23,9 +18,6 @@
         <td>{{purchases.qty_purchase}}</td>
         <td>{{purchases.purchase_price}}</td>
         <td>{{purchases.selling_price}}</td>
-        <td><a href="{%url 'view' purchases.id%}">View</a></td>
-        <td><a href="{%url 'edit' purchases.id%}">Edit</a></td>
-        <td><a href="{%url 'delete' purchases.id%}">Delete</a></td>
     </tr>
     {%endfor%}
 </table>

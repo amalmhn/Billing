@@ -43,3 +43,47 @@ class PurchaseCreate(TemplateView):
             return redirect('purchase')
         else:
             return render(request,self.template_name,self.context)
+
+class PurchaseView(TemplateView):
+    model = PurchaseModel
+    template_name = 'billingapp/purchaseView.html'
+    context = {}
+    def get(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        purchase = self.model.objects.filter(id=id)
+        self.context['purchase'] = purchase
+        return render(request,self.template_name,self.context)
+
+class PurchaseEdit(TemplateView):
+    model = PurchaseModel
+    form_class = PurchaseCreateForm
+    template_name = 'billingapp/purchaseEdit.html'
+    context = {}
+    def get_object(self,id):
+        return self.model.objects.get(id=id)
+    def get(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        purchase = self.get_object(id)
+        form = self.form_class(instance=purchase)
+        self.context['form'] = form
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        purchase = self.get_object(id)
+        form = self.form_class(request.POST,instance=purchase)
+        if form.is_valid():
+            form.save()
+            return redirect('purchase')
+        else:
+            return render(request,self.template_name,self.context)
+
+class PurchaseDelete(TemplateView):
+    model = PurchaseModel
+    def get_object(self,id):
+        return self.model.objects.get(id=id)
+    def get(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        purchase = self.get_object(id)
+        purchase.delete()
+        return redirect('purchase')

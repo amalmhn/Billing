@@ -19,5 +19,7 @@ from .views import *
 urlpatterns = [
     path('item/', ItemCreate.as_view(), name='item'),
     path('purchase/',PurchaseCreate.as_view(), name='purchase'),
-
+    path('view/<int:pk>',PurchaseView.as_view(), name='view'),
+    path('edit/<int:pk>',PurchaseEdit.as_view(), name='edit'),
+    path('delete/<int:pk>',PurchaseDelete.as_view(), name='delete'),
 ]
