@@ -87,3 +87,15 @@ class PurchaseDelete(TemplateView):
         purchase = self.get_object(id)
         purchase.delete()
         return redirect('purchase')
+
+class OrderCreate(TemplateView):
+    model = Order
+    form_class = OrderCreateForm
+    template_name = 'billingapp/orderCreate.html'
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        self.context['form'] = form
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs):

@@ -11,9 +11,15 @@ class ItemCreateForm(ModelForm):
     #def clean(self):
 
 class PurchaseCreateForm(ModelForm):
-    date = forms.DateField(widget=forms.SelectDateWidget)
+    # date = forms.DateField(widget=forms.SelectDateWidget)
     class Meta:
         model = PurchaseModel
         fields = '__all__'
 
     #def clean(self):
+
+class OrderCreateForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = ['billnumber','customer_name','phone_number']
+

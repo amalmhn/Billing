@@ -22,4 +22,5 @@ urlpatterns = [
     path('view/<int:pk>',PurchaseView.as_view(), name='view'),
     path('edit/<int:pk>',PurchaseEdit.as_view(), name='edit'),
     path('delete/<int:pk>',PurchaseDelete.as_view(), name='delete'),
+    path('order',OrderCreate.as_view(), name='order'),
 ]
