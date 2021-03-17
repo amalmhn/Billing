@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Lines</title>
+</head>
+<body>
+<form action="" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <input type="submit" value="Add other">
+</form>
+<h1>total{{total}}</h1>
+<table>
+    <tr>
+        <td>billnumber</td>
+        <td>productname</td>
+        <td>productqty</td>
+        <td>amount</td>
+        {%for item in items%}
+        <tr>
+    <td>{{item.bill_number}}</td>
+    <td>{{item.product_name}}</td>
+    <td>{{item.product_qty}}</td>
+    <td>{{item.amount}}</td>
+</tr>
+    {%endfor%}
+    </tr>
+</table>
+</body>
+</html>

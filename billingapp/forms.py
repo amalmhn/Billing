@@ -23,3 +23,11 @@ class OrderCreateForm(ModelForm):
         model = Order
         fields = ['billnumber','customer_name','phone_number']
 
+class OrderLinesForm(forms.Form):
+    bill_number = forms.CharField()
+    product_quantity = forms.IntegerField()
+    product_name = PurchaseModel.objects.all().values_list('item__item_name')
+    result = [(tp[0],tp[0]) for tp in product_name]
+    product_name = forms.ChoiceField(choices=result)
+
+
