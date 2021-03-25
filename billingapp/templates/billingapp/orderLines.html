@@ -10,7 +10,9 @@
     {{form.as_p}}
     <input type="submit" value="Add other">
 </form>
+{%if total%}
 <h1>total{{total}}</h1>
+{%endif%}
 <table>
     <tr>
         <td>billnumber</td>
@@ -27,5 +29,6 @@
     {%endfor%}
     </tr>
 </table>
+<a href="{%url 'generate' billnum%}">GenerateBill</a>
 </body>
 </html>

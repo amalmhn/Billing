@@ -114,7 +114,7 @@ class OrderCreate(TemplateView):
             form.save()
             return redirect('orderline',billnumber=billnumber)
 
-class OrderLines(TemplateView):
+class OrderLinesView(TemplateView):
     model = OrderLines
     form_class = OrderLinesForm
     template_name = 'billingapp/orderLines.html'
@@ -127,6 +127,7 @@ class OrderLines(TemplateView):
         self.context['items'] = items
         total = self.model.objects.filter(bill_number__billnumber=billnum).aggregate(Sum('amount'))
         self.context['total'] = total['amount__sum'] #this amount__sum is the type pf sum saved in total.U can see that in the shell
+        self.context['billnum'] = billnum
         return render(request,self.template_name,self.context)
     def post(self,request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -142,3 +143,15 @@ class OrderLines(TemplateView):
 
             orderline.save()
             return redirect('orderline',billnumber=bill_number)
+
+class BillGenerate(TemplateView):
+    model = Order
+    def get(self, request, *args, **kwargs):
+        billnum=kwargs.get('billnumber')
+        order = self.model.objects.get(billnumber=billnum)
+        total = OrderLines.objects.filter(bill_number__billnumber=billnum).aggregate(Sum('amount'))
+        total = total['amount__sum']
+        order.bill_total = total
+        order.save()
+        print('bill saved')
+        return redirect('order')

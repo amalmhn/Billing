@@ -23,5 +23,6 @@ urlpatterns = [
     path('edit/<int:pk>',PurchaseEdit.as_view(), name='edit'),
     path('delete/<int:pk>',PurchaseDelete.as_view(), name='delete'),
     path('order',OrderCreate.as_view(), name='order'),
-    path('orderline/<str:billnumber>',OrderLines.as_view(), name='orderline'),
+    path('orderline/<str:billnumber>',OrderLinesView.as_view(), name='orderline'),
+    path('generate/<str:billnumber>',BillGenerate.as_view(), name='generate')
 ]
