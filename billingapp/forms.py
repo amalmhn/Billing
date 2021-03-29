@@ -2,6 +2,9 @@ from django.forms import ModelForm
 from .models import *
 from django.contrib.admin.widgets import AdminDateWidget
 from django import forms
+#user creation form and User model
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class ItemCreateForm(ModelForm):
     class Meta:
@@ -30,4 +33,13 @@ class OrderLinesForm(forms.Form):
     result = [(tp[0],tp[0]) for tp in product_name]
     product_name = forms.ChoiceField(choices=result)
 
+class RegistrationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username' , 'password1' , 'password2' , 'first_name' , 'last_name' , 'email']
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=120)
+    password = forms.CharField(max_length=130)
 

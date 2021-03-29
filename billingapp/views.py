@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 from django.views.generic import TemplateView
+from django.contrib.auth import login,logout,authenticate
 # Create your views here.
 
 class ItemCreate(TemplateView):
@@ -155,3 +156,47 @@ class BillGenerate(TemplateView):
         order.save()
         print('bill saved')
         return redirect('order')
+
+class Registration(TemplateView):
+    form_class = RegistrationForm
+    model = User
+    template_name = 'billingapp/registration.html'
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        self.context['form'] = form
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs): #uname : vijay@123 , pw:surya@123
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request,'billingapp/login.html')
+        else:
+            form = self.form_class(request.POST)
+            self.context['form'] = form
+            return render(request, self.template_name, self.context)
+
+class LoginView(TemplateView):
+    template_name = 'billingapp/login.html'
+    form_class = LoginForm
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        self.context['form'] = form
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            uname = form.cleaned_data.get('username')
+            pwd = form.cleaned_data.get('password')
+            user = authenticate(username = uname , password = pwd)
+            if user!=None:
+                login(request,user)
+                return redirect('order')
+            else:
+                form = self.form_class(request.POST)
+                self.context['form'] = form
+                return render(request,self.template_name,self.context)
+

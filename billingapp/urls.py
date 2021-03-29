@@ -24,5 +24,7 @@ urlpatterns = [
     path('delete/<int:pk>',PurchaseDelete.as_view(), name='delete'),
     path('order',OrderCreate.as_view(), name='order'),
     path('orderline/<str:billnumber>',OrderLinesView.as_view(), name='orderline'),
-    path('generate/<str:billnumber>',BillGenerate.as_view(), name='generate')
+    path('generate/<str:billnumber>',BillGenerate.as_view(), name='generate'),
+    path('register',Registration.as_view(), name='register'),
+    path('signin',LoginView.as_view(), name='signin')
 ]
